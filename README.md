@@ -15,5 +15,8 @@ Portfolio : https://johnlobster.github.io/portfolio/
 `TP_HOST_NAME`
 The host name of tp crisis website, eg www.ToiletPaperCrisis.com, or netlify name etc. during development
 
+`TP_CONTRIBUTION_LAMBDA_ADDRESS`
+Host name/port of server
+
 `TP_EMAIL_ADDRESS`
 Email address to send contributed information to 

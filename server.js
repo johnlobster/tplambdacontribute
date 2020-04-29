@@ -26,6 +26,7 @@ app.post("*", function (req, res) {
   let mailString= "";
   // check for valid json in request body
   if ((!req.body) || ((!req.body.name) && (!req.body.subject) && (!req.body.message)) ) {
+    console.log("No body");
     res.json({ contributeReturn: "No content" }); 
   }
   // fill in missing fields if necessary
@@ -49,7 +50,7 @@ app.post("*", function (req, res) {
   }
 
   // To do check for invalid characters and escape them
-  // To do Check that maximum string length not exceeded
+  // To do Check that maximum string length not exceeded (truncate)
   
   mailString = `
   Name: ${userName}
