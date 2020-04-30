@@ -8,8 +8,15 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "path": "^0.12.7"
+    "express-winston": "^4.0.3",
+    "nodemon": "^2.0.3",
+    "path": "^0.12.7",
+    "winston": "^3.2.1"
+  },
+  "scripts": {
+    "serve": "nodemon"
   }
 }

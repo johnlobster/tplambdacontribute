@@ -10,6 +10,22 @@ LinkedIn : https://www.linkedin.com/in/johnwwebster/
 
 Portfolio : https://johnlobster.github.io/portfolio/
 
+### Technologies used
+
+- Node.js
+- (Node) express
+- (Node) cors
+- (Node) dotenv
+
+### Deployment
+
+#### Testing
+
+nodemon
+Postman
+
+#### Netlify
+
 #### Required environment variables
 
 `TP_HOST_NAME`
@@ -20,3 +36,8 @@ Host name/port of server
 
 `TP_EMAIL_ADDRESS`
 Email address to send contributed information to 
+
+### Testing
+
+### Technical notes
+

@@ -2,14 +2,18 @@
 // cross-server, only accepts requests from tpcrisis website
 
 require("dotenv").config(); // add variables in .env file to process.env
-const path = require("path");
 const express = require("express");
+const cors = require("cors");
 
 const PORT = process.env.PORT || 3001;
 
 // To do get environment variables and check for validity. Use them for all host names, etc.
+const originAddress = process.env.TP_HOST_NAME || "http://localhost:3001";
+if (!process.env.TP_EMAIL_ADDRESS) {
+  throw new Error("No destination Email was set up");
+}
 // set up express
-const app = express();                                                                            // Define middleware here                                                                         app.use(express.urlencoded({ extended: true }));                                                  app.use(express.json());
+const app = express(); 
 
 // middleware
 app.use(express.json());
@@ -18,11 +22,12 @@ app.use(express.json());
    check https
    check originating website
    check cors
+   check json sent
 */
-app.post("*", function (req, res) { 
+app.post("*", cors(), function (req, res) { 
   // (name="", subject="", message="")
   console.log("Message received");
-
+  
   let mailString= "";
   // check for valid json in request body
   if ((!req.body) || ((!req.body.name) && (!req.body.subject) && (!req.body.message)) ) {
