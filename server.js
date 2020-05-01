@@ -4,6 +4,7 @@
 require("dotenv").config(); // add variables in .env file to process.env
 const express = require("express");
 const cors = require("cors");
+const nodemailer = require("nodemailer");
 
 const PORT = process.env.PORT || 3001;
 
@@ -12,6 +13,45 @@ const originAddress = process.env.TP_HOST_NAME || "http://localhost:3001";
 if (!process.env.TP_EMAIL_ADDRESS) {
   throw new Error("No destination Email was set up");
 }
+
+// set up nodemailer
+let transporter = nodemailer.createTransport({
+  host: "smtp.comcast.net",
+  port: 465,
+  secure: true,
+  auth: {
+    user: "johnlobster",
+    pass: "callcane"
+  }
+});
+console.log("set up nodemailer");
+
+// check mail server
+transporter.verify(function (error, success) {
+  if (error) {
+    console.log("Bad connection to mail server");
+    throw new Error(error);
+  } else {
+    console.log("Server is ready to take our messages");
+  }
+});
+
+// send a test email
+// transporter.sendMail({
+//   from: "suspicious@dodgy.com",
+//   to: "johnlobster@comcast.net",
+//   subject: "Message title",
+//   text: "Plaintext version of the message",
+// }, (err, info) => {
+//   if (err) {
+//     console.log("Error sending message");
+//     throw new Error(err);
+//   } else {
+//     console.log("Mail sent");
+//   }
+// }
+// );
+
 // set up express
 const app = express(); 
 
@@ -70,6 +110,20 @@ app.post("*", cors(), function (req, res) {
   // return "Contribution failed"
 
   console.log(mailString);
+  transporter.sendMail({
+    from: "suspicious@dodgy.com",
+    to: "johnlobster@comcast.net",
+    subject: "Message title",
+    text: mailString,
+  }, (err, info) => {
+    if (err) {
+      console.log("Error sending message");
+      throw new Error(err);
+    } else {
+      console.log("Mail sent");
+    }
+  }
+  );
   res.json({ contributeReturn: "Success" }); 
 
 });

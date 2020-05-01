@@ -37,7 +37,8 @@ Host name/port of server
 `TP_EMAIL_ADDRESS`
 Email address to send contributed information to 
 
-### Testing
-
 ### Technical notes
+
+Very simple server
+
 
