@@ -9,48 +9,40 @@ const nodemailer = require("nodemailer");
 const PORT = process.env.PORT || 3001;
 
 // To do get environment variables and check for validity. Use them for all host names, etc.
-const originAddress = process.env.TP_HOST_NAME || "http://localhost:3001";
 if (!process.env.TP_EMAIL_ADDRESS) {
   throw new Error("No destination Email was set up");
 }
 
+// Check that all environment variables to access the mail server are present
+
+if ( 
+  ! process.env.TP_NODEMAILER_HOST ||
+  ! process.env.TP_NODEMAILER_PORT ||
+  ! process.env.TP_NODEMAILER_SECURE ||
+  ! process.env.TP_NODEMAILER_AUTH_USERNAME ||
+  ! process.env.TP_NODEMAILER_AUTH_PASSWORD
+) {
+  throw new Error("Missing environment variable required to access mail server");
+}
 // set up nodemailer
 let transporter = nodemailer.createTransport({
-  host: "smtp.comcast.net",
-  port: 465,
-  secure: true,
+  host: process.env.TP_NODEMAILER_HOST,
+  port: process.env.TP_NODEMAILER_PORT,
+  secure: process.env.TP_NODEMAILER_SECURE,
   auth: {
-    user: "johnlobster",
-    pass: "callcane"
+    user: process.env.TP_NODEMAILER_AUTH_USERNAME,
+    pass: process.env.TP_NODEMAILER_AUTH_PASSWORD
   }
 });
-console.log("set up nodemailer");
 
 // check mail server
 transporter.verify(function (error, success) {
   if (error) {
-    console.log("Bad connection to mail server");
-    throw new Error(error);
+    throw new Error("Failed connection to mail server");
   } else {
-    console.log("Server is ready to take our messages");
+    console.log("Mail server is ready to take our messages");
   }
 });
-
-// send a test email
-// transporter.sendMail({
-//   from: "suspicious@dodgy.com",
-//   to: "johnlobster@comcast.net",
-//   subject: "Message title",
-//   text: "Plaintext version of the message",
-// }, (err, info) => {
-//   if (err) {
-//     console.log("Error sending message");
-//     throw new Error(err);
-//   } else {
-//     console.log("Mail sent");
-//   }
-// }
-// );
 
 // set up express
 const app = express(); 
@@ -109,22 +101,21 @@ app.post("*", cors(), function (req, res) {
   // To do send to mail, check return result, wait for timeout
   // return "Contribution failed"
 
-  console.log(mailString);
   transporter.sendMail({
     from: "suspicious@dodgy.com",
-    to: "johnlobster@comcast.net",
-    subject: "Message title",
+    to: process.env.TP_EMAIL_ADDRESS,
+    subject: "Your web page would like to talk to you",
     text: mailString,
   }, (err, info) => {
     if (err) {
-      console.log("Error sending message");
-      throw new Error(err);
+      res.json({ contributeReturn: "Contribution failed"});
+      console.log("Mail failed to send");
+      console.log(err);
     } else {
-      console.log("Mail sent");
+      res.json({ contributeReturn: "Success" }); 
     }
   }
   );
-  res.json({ contributeReturn: "Success" }); 
 
 });
 
