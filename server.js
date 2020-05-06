@@ -35,14 +35,7 @@ let transporter = nodemailer.createTransport({
   }
 });
 
-// check mail server
-transporter.verify(function (error, success) {
-  if (error) {
-    throw new Error("Failed connection to mail server");
-  } else {
-    console.log("Mail server is ready to take our messages");
-  }
-});
+
 
 // set up express
 const app = express(); 
@@ -119,6 +112,14 @@ app.post("*", cors(), function (req, res) {
 
 });
 
-app.listen(PORT, () => { 
-  console.log(`🌎 ==> tp lambda contributions server listening on port ${PORT}`); 
+// check mail server, don't start http server until mail server has been verified
+transporter.verify(function (error, success) {
+  if (error) {
+    throw new Error("Failed connection to mail server");
+  } else {
+    console.log("Mail server is ready to take our messages");
+    app.listen(PORT, () => {
+      console.log(`🌎 ==> tp lambda contributions server listening on port ${PORT}`);
+    });
+  }
 });
