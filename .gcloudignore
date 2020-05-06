@@ -2,5 +2,9 @@
 .git
 .gitignore
 .env
+
+# app.yaml is created from google.yaml and .env, so don't need to upload google.yaml
+google.yaml
+
 node_modules/
 #!include.gitignore

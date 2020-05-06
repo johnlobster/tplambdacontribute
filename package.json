@@ -7,6 +7,9 @@
   "author": "John Webster <JohnLobster@comcast.net>",
   "license": "MIT",
   "private": false,
+  "engines": {
+    "node": "10.x.x"
+  },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
@@ -19,6 +22,7 @@
   },
   "scripts": {
     "serve": "nodemon",
-    "start": "node server.js"
+    "start": "node server.js",
+    "deploy:google": "rm -rf app.yaml && node buildYaml.js && gcloud app deploy"
   }
 }
