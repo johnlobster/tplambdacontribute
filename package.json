@@ -18,6 +18,7 @@
     "winston": "^3.2.1"
   },
   "scripts": {
-    "serve": "nodemon"
+    "serve": "nodemon",
+    "start": "node server.js"
   }
 }
