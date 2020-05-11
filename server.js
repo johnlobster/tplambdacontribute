@@ -42,6 +42,7 @@ const app = express();
 
 // middleware
 app.use(express.json());
+app.use(cors()); // enables for all requests
 
 /* To do security
    check https
@@ -49,7 +50,7 @@ app.use(express.json());
    check cors
    check json sent
 */
-app.post("*", cors(), function (req, res) { 
+app.post("*", function (req, res) { 
   // (name="", subject="", message="")
   console.log("Message received");
   
