@@ -7,9 +7,6 @@
   "author": "John Webster <JohnLobster@comcast.net>",
   "license": "MIT",
   "private": false,
-  "engines": {
-    "node": "10.x.x"
-  },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",

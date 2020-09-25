@@ -96,7 +96,7 @@ app.post("*", function (req, res) {
   // return "Contribution failed"
 
   transporter.sendMail({
-    from: "suspicious@dodgy.com",
+    from: "johnlobster@comcast.net",
     to: process.env.TP_EMAIL_ADDRESS,
     subject: "Your web page would like to talk to you",
     text: mailString,
